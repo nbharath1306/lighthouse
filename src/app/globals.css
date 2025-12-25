@@ -1,22 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-black: #050505;
+  --color-brand-black: #030303;
+  --color-deep-void: #010101; 
 
   --color-neon-green: #00ff41;
-  --color-neon-red: #ff0040;
-  --color-neon-blue: #00f0ff;
+  --color-neon-red: #ff3333;
+  --color-neon-blue: #00f3ff;
+  --color-holo-purple: #bd00ff;
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
   --font-mono: "Menlo", "Consolas", "Monaco", monospace;
 
   --ease-fluid: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-cinematic: cubic-bezier(0.6, 0.05, 0.01, 1);
 }
 
 :root {
-  --background: #050505;
-  --foreground: #e1e1e1;
+  --background: #030303;
+  --foreground: #f0f0f0;
 }
 
 body {
@@ -25,15 +28,21 @@ body {
   font-family: var(--font-body);
   font-smooth: always;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1,h2,h3,h4,h5,h6 {
   font-family: var(--font-heading);
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.02em;
+}
+
+.text-cinematic {
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+}
+
+.text-widest-cinematic {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
