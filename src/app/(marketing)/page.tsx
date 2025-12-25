@@ -1,124 +1,137 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowDown, Brain, Zap, Clock } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Scene from "@/components/landing/Scene";
 import MagneticButton from "@/components/ui/MagneticButton";
 
+function RunningCode() {
+    const [code, setCode] = useState("");
+    useEffect(() => {
+        const snippet = `
+            // NEURO-SYNC PROTOCOL v9.0
+            function optimize_cortex(adenosine_level) {
+                if (adenosine > THRESHOLD) {
+                    initiate_flush();
+                    return SYSTEM_RESET;
+                }
+                while (true) {
+                    synapse.fire();
+                    optimization.run();
+                }
+            }
+        `;
+        let i = 0;
+        const interval = setInterval(() => {
+            setCode(snippet.slice(0, i));
+            i++;
+            if (i > snippet.length) i = 0;
+        }, 50);
+        return () => clearInterval(interval);
+    }, []);
+    return <pre className="text-[10px] font-mono text-lab-green opacity-50 whitespace-pre-wrap">{code}</pre>;
+}
+
 export default function LandingPage() {
     return (
-        <div className="relative w-full bg-black text-white font-body overflow-x-hidden">
-            {/* The 3D Universe Background */}
+        <div className="relative w-full bg-brand-black text-clinical-white font-mono selection:bg-hazard-orange selection:text-black overflow-x-hidden">
+            {/* The 3D Layer - Mixed Mode */}
             <Scene />
 
-            {/* Content Layer */}
-            <div className="relative z-10">
+            {/* GRID OVERLAY - The "Architectural" feel */}
+            <div className="fixed inset-0 z-50 pointer-events-none flex justify-between px-6 opacity-20">
+                <div className="w-px h-full bg-clinical-white/20"></div>
+                <div className="w-px h-full bg-clinical-white/20"></div>
+                <div className="w-px h-full bg-clinical-white/20"></div>
+                <div className="w-px h-full bg-clinical-white/20"></div>
+            </div>
 
-                {/* HERO: The Interface */}
-                <section className="h-screen w-full flex flex-col items-center justify-center relative">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1.5, ease: "easeOut" }}
-                        className="text-center z-10 mix-blend-difference"
+            {/* HEADER / HUD */}
+            <header className="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-start mix-blend-difference">
+                <div className="flex flex-col">
+                    <span className="text-xs tracking-widest uppercase mb-1">Status: Operational</span>
+                    <span className="text-[10px] text-lab-green animate-pulse">● LIVE DATA STREAM</span>
+                    <div className="mt-4 w-32">
+                        <RunningCode />
+                    </div>
+                </div>
+                <div className="text-right">
+                    <h1 className="text-xl font-bold tracking-tighter uppercase">Lighthouse Labs</h1>
+                    <p className="text-[10px] tracking-widest text-hazard-orange">RESTRICTED ACCESS</p>
+                </div>
+            </header>
+
+            {/* SECTION 1: THE SPECIMEN */}
+            <section className="h-screen w-full flex flex-col justify-end pb-24 px-6 relative z-10">
+                <div className="max-w-[90vw]">
+                    <motion.h1
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 1.5, ease: [0.85, 0, 0.15, 1] }}
+                        className="text-[14vw] leading-[0.8] font-bold tracking-tighter uppercase mix-blend-difference text-white"
                     >
-                        <h1 className="text-[12vw] leading-[0.8] font-bold tracking-tighter uppercase font-heading text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500">
-                            Light<br />house
-                        </h1>
-                        <p className="mt-8 text-xl md:text-2xl font-mono text-neon-blue tracking-[0.2em] uppercase">
-                            Bio-Chemical Simulation Engine
-                        </p>
-                    </motion.div>
+                        Biological<br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-clinical-white to-transparent" style={{ WebkitTextStroke: "1px white" }}>Singularity</span>
+                    </motion.h1>
+                </div>
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 2, duration: 1 }}
-                        className="absolute bottom-12 flex flex-col items-center gap-4"
-                    >
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-white/50">Initiate Sequence</span>
-                        <ArrowDown className="w-5 h-5 text-neon-blue animate-bounce" />
-                    </motion.div>
-                </section>
+                <div className="absolute top-1/2 right-12 -translate-y-1/2 w-64 text-right hidden md:block">
+                    <p className="text-xs leading-relaxed opacity-70">
+                        [FIG. 1] NEURAL LATTICE SIMULATION.<br />
+                        OBSERVE THE FLUCTUATION IN CORTICAL FIRING RATES.<br />
+                        THIS IS YOUR BRAIN ON MATH.
+                    </p>
+                </div>
+            </section>
 
-                {/* SECTION 2: The Core */}
-                <section className="min-h-screen w-full flex items-center justify-center py-24 px-6 bg-black/50 backdrop-blur-sm">
-                    <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-24">
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 1 }}
-                            viewport={{ once: true }}
-                            className="space-y-8"
-                        >
-                            <h2 className="text-6xl md:text-8xl font-heading uppercase leading-none">
-                                Neural<br />
-                                <span className="text-neon-green">Chemistry</span>
-                            </h2>
-                            <p className="text-xl text-white/60 leading-relaxed font-light max-w-md">
-                                Visualize the invisible war between adenosine and caffeine.
-                                Predict your cognitive crash with mathematical precision before it happens.
+            {/* SECTION 2: DATA DUMP */}
+            <section className="min-h-screen w-full border-t border-clinical-white/20 relative z-10 bg-brand-black/80 backdrop-blur-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 h-full">
+                    <div className="p-12 border-r border-clinical-white/20 flex flex-col justify-between">
+                        <div>
+                            <span className="text-xs text-hazard-orange mb-4 block">[02] RAW METRICS</span>
+                            <h2 className="text-6xl font-bold uppercase mb-8">No Placebo.<br />Just Data.</h2>
+                            <p className="text-xl leading-relaxed max-w-md opacity-80 text-justify">
+                                We don't sell sleep. We sell architectural blueprints for your endocrine system.
+                                By modeling adenosine decay rates against your unique genetic baseline, we engineer the perfect wakefulness window.
                             </p>
-                            <div className="flex gap-4">
-                                <MagneticButton strength={20}>
-                                    <div className="w-16 h-16 rounded-full border border-neon-green/30 flex items-center justify-center bg-neon-green/5">
-                                        <Brain className="w-6 h-6 text-neon-green" />
-                                    </div>
-                                </MagneticButton>
-                                <MagneticButton strength={20}>
-                                    <div className="w-16 h-16 rounded-full border border-neon-blue/30 flex items-center justify-center bg-neon-blue/5">
-                                        <Zap className="w-6 h-6 text-neon-blue" />
-                                    </div>
-                                </MagneticButton>
-                            </div>
-                        </motion.div>
-
-                        {/* Placeholder for 3D Interaction Focus */}
-                        <div className="hidden md:block">
-                            {/* The 3D scene handles the visuals here */}
+                        </div>
+                        <MagneticButton strength={30}>
+                            <Link href="/simulation" className="mt-12 inline-block px-12 py-4 border border-clinical-white hover:bg-clinical-white hover:text-black transition-colors uppercase tracking-widest text-sm font-bold">
+                                Initializing Protocol -&gt;
+                            </Link>
+                        </MagneticButton>
+                    </div>
+                    <div className="p-12 relative overflow-hidden">
+                        {/* Placeholder for Data Viz */}
+                        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <div className="flex flex-col gap-2 font-mono text-xs opacity-50">
+                            {Array.from({ length: 20 }).map((_, i) => (
+                                <div key={i} className="flex justify-between border-b border-white/10 py-2">
+                                    <span>COORD_X_{i + 300}4</span>
+                                    <span>{Math.random().toFixed(8)}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                {/* SECTION 3: Circadian Rhythm */}
-                <section className="min-h-screen w-full flex items-center justify-end py-24 px-6">
-                    <div className="max-w-4xl w-full text-right">
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 1 }}
-                            viewport={{ once: true }}
-                        >
-                            <div className="inline-flex items-center gap-3 mb-6 border border-white/20 px-4 py-2 rounded-full bg-white/5 backdrop-blur">
-                                <Clock className="w-4 h-4 text-neon-blue" />
-                                <span className="text-xs font-mono uppercase tracking-widest text-neon-blue">Sync Complete</span>
-                            </div>
-                            <h2 className="text-6xl md:text-9xl font-heading uppercase leading-none mb-8 mix-blend-overlay">
-                                Total<br />Sync
-                            </h2>
-                            <p className="text-2xl text-white/70 max-w-2xl ml-auto font-light">
-                                Align your biological clock with the solar day.
-                                Master your cortisol peaks and melatonin onset.
-                            </p>
-                        </motion.div>
-                    </div>
-                </section>
-
-                {/* Footer / CTA */}
-                <section className="h-[50vh] w-full flex flex-col items-center justify-center bg-gradient-to-t from-neon-blue/10 to-transparent">
-                    <MagneticButton strength={50}>
-                        <Link
-                            href="/simulation"
-                            className="group relative px-12 py-6 bg-white text-black rounded-full overflow-hidden flex items-center gap-4 transition-all hover:scale-105"
-                        >
-                            <span className="relative z-10 text-xl font-bold uppercase tracking-widest">Enter Simulation</span>
-                            <div className="absolute inset-0 bg-neon-green transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
+            {/* SECTION 3: MANIFESTO */}
+            <section className="h-screen w-full flex items-center justify-center border-t border-clinical-white/20 bg-hazard-orange text-black z-10 relative">
+                <div className="max-w-4xl text-center">
+                    <h2 className="text-[8vw] font-bold leading-none tracking-tighter mb-8">WAKE UP</h2>
+                    <p className="text-2xl font-mono uppercase tracking-widest">
+                        The simulation awaits.
+                    </p>
+                    <div className="mt-12">
+                        <Link href="/simulation" className="text-xl underline decoration-2 underline-offset-4 hover:no-underline">
+                            ENTER THE LAB
                         </Link>
-                    </MagneticButton>
-                </section>
-            </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }

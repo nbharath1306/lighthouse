@@ -1,37 +1,42 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-black: #030303;
-  --color-deep-void: #010101; 
-
-  --color-neon-green: #00ff41;
-  --color-neon-red: #ff3333;
-  --color-neon-blue: #00f3ff;
-  --color-holo-purple: #bd00ff;
+  --color-brand-black: #000000;
+  --color-clinical-white: #ffffff;
+  --color-hazard-orange: #ff3300;
+  --color-lab-green: #00ff00;
+  --color-void: #050505;
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
   --font-mono: "Menlo", "Consolas", "Monaco", monospace;
 
-  --ease-fluid: cubic-bezier(0.19, 1, 0.22, 1);
-  --ease-cinematic: cubic-bezier(0.6, 0.05, 0.01, 1);
+  --ease-surgical: cubic-bezier(0.85, 0, 0.15, 1);
 }
 
 :root {
-  --background: #030303;
-  --foreground: #f0f0f0;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
+  /* Defaulting to mono for the 'Lab' feel */
   font-smooth: always;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  cursor: crosshair;
+  /* Raw interaction feel */
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   text-transform: uppercase;
   letter-spacing: -0.02em;
