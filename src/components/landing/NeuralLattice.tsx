@@ -1,11 +1,11 @@
-"use client";
-
-import { useRef } from "react";
-import { useFrame, ThreeElements } from "@react-three/fiber";
+import { useRef, useMemo } from "react";
+import { useFrame, ThreeElements, extend } from "@react-three/fiber";
 import * as THREE from "three";
 import { NeuralLatticeMaterial } from "@/components/shaders/NeuralLatticeMaterial";
 
-// Add to Three elements
+// Register the material
+extend({ NeuralLatticeMaterial });
+
 declare module "@react-three/fiber" {
     interface ThreeElements {
         neuralLatticeMaterial: any;

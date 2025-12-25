@@ -1,9 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import { useFrame, ThreeElements } from "@react-three/fiber";
+import { useFrame, ThreeElements, extend } from "@react-three/fiber";
 import * as THREE from "three";
 import { NeuroFluidMaterial } from "@/components/shaders/NeuroFluidMaterial";
+
+extend({ NeuroFluidMaterial });
 
 declare module "@react-three/fiber" {
     interface ThreeElements {

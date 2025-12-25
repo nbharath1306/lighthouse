@@ -34,6 +34,15 @@ function RunningCode() {
 }
 
 export default function LandingPage() {
+    const [dataStream, setDataStream] = useState<Array<{ id: string, val: string }>>([]);
+
+    useEffect(() => {
+        setDataStream(Array.from({ length: 20 }).map((_, i) => ({
+            id: `COORD_X_${i + 300}4`,
+            val: Math.random().toFixed(8)
+        })));
+    }, []);
+
     return (
         <div className="relative w-full bg-brand-black text-clinical-white font-mono selection:bg-hazard-orange selection:text-black overflow-x-hidden">
             {/* The 3D Layer - Mixed Mode */}
@@ -107,10 +116,10 @@ export default function LandingPage() {
                         {/* Placeholder for Data Viz */}
                         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
                         <div className="flex flex-col gap-2 font-mono text-xs opacity-50">
-                            {Array.from({ length: 20 }).map((_, i) => (
+                            {dataStream.map((item, i) => (
                                 <div key={i} className="flex justify-between border-b border-white/10 py-2">
-                                    <span>COORD_X_{i + 300}4</span>
-                                    <span>{Math.random().toFixed(8)}</span>
+                                    <span>{item.id}</span>
+                                    <span>{item.val}</span>
                                 </div>
                             ))}
                         </div>
