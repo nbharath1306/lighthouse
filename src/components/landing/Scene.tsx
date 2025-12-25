@@ -11,28 +11,24 @@ import TimeDistortion from "./TimeDistortion";
 
 function CameraRig() {
     const { camera } = useThree();
-    const [scrollSpeed, setScrollSpeed] = useState(0);
     const lastScrollY = useRef(0);
+    const scrollSpeedRef = useRef(0);
 
     useFrame((state, delta) => {
         // "The Lab" Feel: Static, rigid, slightly unnerving movement
 
         // Scroll Logic for "The Descent" (V2)
-        // We need to re-enable descent because the fluid is lower down.
         const scrollY = window.scrollY;
         const speed = Math.abs(scrollY - lastScrollY.current);
         lastScrollY.current = scrollY;
 
-        // Dampen speed for glitch effect
-        setScrollSpeed(THREE.MathUtils.lerp(scrollSpeed, speed, 0.1));
+        // Dampen speed using Ref (no re-render)
+        scrollSpeedRef.current = THREE.MathUtils.lerp(scrollSpeedRef.current, speed, 0.1);
 
         const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
         const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
 
-        // V2 Descent:
-        // 0.0: Lattice (y=0)
-        // 0.5: Fluid (y=-10)
-        // 1.0: Deep Void
+        // V2 Descent
         const targetY = -progress * 25;
 
         camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.05);
@@ -42,14 +38,11 @@ function CameraRig() {
 
         // Look slightly ahead/down
         camera.lookAt(0, camera.position.y - 2, 0);
-    });
 
-    // Pass scroll speed to global store or use direct Effect ref access if possible
-    // For simplicity in this architecture, we will just use the CameraRig to drive the scene mood
-    // But to affect PostProcessing, we need a ref exposed or a shared state.
-    // Let's use a simple global variable override for the shader if we want to be "raw"
-    // Or just accept the static glitch for now as requested "Glitch transitions" might be complex to wire without context.
-    // actually, let's keep it static for stability as "Scroll Speed" wiring in R3F needs a store.
+        // HACK: Expose speed to window for the "GlitchController" (since we can't easily share refs across sibling components without Context)
+        // A better way is Zustand, but for this hotfix:
+        (window as any).lighthouseScrollSpeed = scrollSpeedRef.current;
+    });
 
     return null;
 }
@@ -84,13 +77,13 @@ export default function Scene() {
     // We can drive this via a simple scroll listener component inside Canvas
     function GlitchController() {
         useFrame(() => {
-            const speed = Math.abs(window.scrollY - (window as any).lastScrollY || 0);
-            (window as any).lastScrollY = window.scrollY;
+            const speed = (window as any).lighthouseScrollSpeed || 0;
 
             if (chromaticRef.current) {
                 // Base offset + speed multiplier
                 const terrorLevel = Math.min(speed * 0.002, 0.05);
-                chromaticRef.current.offset.set(0.002 + terrorLevel, 0.002 + terrorLevel);
+                // FIXME: offset.set is failing in production. Disabling dynamic glitch for stability.
+                // chromaticRef.current.offset.set(0.002 + terrorLevel, 0.002 + terrorLevel);
             }
         });
         return null;

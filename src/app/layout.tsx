@@ -30,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
+        suppressHydrationWarning
         className={`${oswald.variable} ${manrope.variable} antialiased bg-black text-white selection:bg-white selection:text-black overflow-x-hidden`}
       >
         {children}
