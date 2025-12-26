@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Scene from "@/components/landing/Scene";
+import { LighthouseCanvas } from "@/components/landing/LighthouseCanvas";
 import MagneticButton from "@/components/ui/MagneticButton";
 
 function RunningCode() {
@@ -46,7 +46,7 @@ export default function LandingPage() {
     return (
         <div className="relative w-full bg-brand-black text-clinical-white font-mono selection:bg-hazard-orange selection:text-black overflow-x-hidden">
             {/* The 3D Layer - Mixed Mode */}
-            <Scene />
+            <LighthouseCanvas />
 
             {/* GRID OVERLAY - The "Architectural" feel */}
             <div className="fixed inset-0 z-50 pointer-events-none flex justify-between px-6 opacity-20">
